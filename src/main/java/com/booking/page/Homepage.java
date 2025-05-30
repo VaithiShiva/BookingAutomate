@@ -4,11 +4,8 @@ import com.booking.base.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -18,37 +15,24 @@ import java.util.*;
 
 public class Homepage extends TestBase {
 
-    Map<String, String> locations = new HashMap<String, String>();
-
-    public Homepage(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
-    }
-
     @FindBy(xpath = "//nav[@data-testid = 'header-xpb']")
     public WebElement navigationBar;
-
     @FindBy(xpath = "//input[@name = 'ss']")
     public WebElement searchDestination;
-
-
     @FindBy(xpath = "//*[@id='autocomplete-results']")
     public WebElement locationSearchResult;
-
     @FindBy(xpath = "//*[@id='indexsearch']/div[2]/div/form/div/div[2]/div/button")
     public WebElement date;
-
     @FindBy(xpath = "//*[@id='calendar-searchboxdatepicker']/div/div[1]/div/div[2]/h3")
     public WebElement toDateMonth;
-
     @FindBy(xpath = "//*[@id='calendar-searchboxdatepicker']/div/div[1]/div/div[1]/h3")
     public WebElement fromDateMonth;
-
     @FindBy(xpath = "//*[@id='group-0-heading' and text()='Trending destinations']")
     public WebElement trendingDestinationText;
-
+    public List<WebElement> searchList;
+    Map<String, String> locations = new HashMap<String, String>();
     @FindBy(css = "button[type='submit']")
-    private  WebElement submit;
+    private WebElement submit;
 
     @FindBy(xpath = "//button[@class = 'de576f5064']")
     private WebElement clearLocationButton;
@@ -59,10 +43,10 @@ public class Homepage extends TestBase {
     @FindBy(xpath = "//span[@data-testid = 'date-display-field-start']")
     private WebElement dateField;
 
-    public List<WebElement> searchList;
-
-
-
+    public Homepage(WebDriver driver) {
+        super(driver);
+        PageFactory.initElements(driver, this);
+    }
 
     public Homepage selectSearchType(String menu) {
         navigationBar.findElement(By.xpath("//a[@id='" + menu + "']")).click();
@@ -75,8 +59,7 @@ public class Homepage extends TestBase {
 
         String[] locationWithState = location.split("\\|");
         waitForPageLoad();
-        if(!Objects.requireNonNull(searchDestination.getDomAttribute("value")).isEmpty())
-        {
+        if (!Objects.requireNonNull(searchDestination.getDomAttribute("value")).isEmpty()) {
             clearLocationButton.click();
         }
         searchDestination.sendKeys(locationWithState[0]);
@@ -107,13 +90,10 @@ public class Homepage extends TestBase {
 
 
     public void selectStartAndToDate(LocalDate from, LocalDate to) {
-
-
         Duration implicitWaitTimeOut = driver.manage().timeouts().getImplicitWaitTimeout();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
         List<WebElement> elements = driver.findElements(By.xpath("//div[@data-testid = 'searchbox-datepicker']"));
-        if (elements.isEmpty())
-        {
+        if (elements.isEmpty()) {
             datePickerTabs.click();
         }
         driver.manage().timeouts().implicitlyWait(implicitWaitTimeOut);
@@ -124,9 +104,7 @@ public class Homepage extends TestBase {
         System.out.println(defaultFrom.getYear());
         System.out.println(from.getYear());
         if (defaultFrom.getYear() == from.getYear()) {
-            if ( from.isAfter(LocalDate.now()) && to.isAfter(from)) {
-                ////*[@id="calendar-searchboxdatepicker"]//h3[contains(text(),'May')]//following-sibling::table//child::span[text() = '7']
-
+            if (from.isAfter(LocalDate.now()) && to.isAfter(from)) {
                 String startMonth = (defaultFrom.getMonth().name().substring(0, 1).toUpperCase()) + defaultFrom.getMonth().name().substring(1).toLowerCase();
                 String toMonth = (defaultTo.getMonth().name().substring(0, 1).toUpperCase()) + defaultTo.getMonth().name().substring(1).toLowerCase();
                 System.out.println(startMonth);
@@ -139,13 +117,10 @@ public class Homepage extends TestBase {
         }
     }
 
-    public SearchResultsPage searchSubmit()
-    {
+    public SearchResultsPage searchSubmit() {
         submit.click();
         return new SearchResultsPage(driver);
     }
-
-
 
 
 }

@@ -21,6 +21,6 @@ public class ReserveApartment {
 
     @Then("user lands on Finish Booking page and verify the price displayed.")
     public void user_lands_on_finish_booking_page_and_verify_the_price_displayed() {
-        Boolean flag = container.reservePage.finishBookingPage();
+        container.reservePage.finishBookingPage();
     }
 }

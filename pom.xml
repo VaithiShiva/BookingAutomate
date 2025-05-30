@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -15,19 +15,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 
-            <selenium.java.version>4.27.0</selenium.java.version>
-            <logback.version>1.5.12</logback.version>
-            <webdriver.manager.version>5.9.2</webdriver.manager.version>
-            <testng.version>7.10.2</testng.version>
-            <jackson.version>2.18.2</jackson.version>
-            <!-- plugins versions -->
-            <maven.compiler.version>3.11.0</maven.compiler.version>
-            <maven.dependency.version>3.6.0</maven.dependency.version>
-            <maven.jar.version>3.3.0</maven.jar.version>
-            <maven.surefire.version>3.1.2</maven.surefire.version>
-            <maven.resources.plugin>3.3.1</maven.resources.plugin>
-            <!-- output directory -->
-            <package.directory>${project.build.directory}/docker-resources</package.directory>
+        <selenium.java.version>4.27.0</selenium.java.version>
+        <logback.version>1.5.12</logback.version>
+        <webdriver.manager.version>5.9.2</webdriver.manager.version>
+        <testng.version>7.10.2</testng.version>
+        <jackson.version>2.18.2</jackson.version>
+        <!-- plugins versions -->
+        <maven.compiler.version>3.11.0</maven.compiler.version>
+        <maven.dependency.version>3.6.0</maven.dependency.version>
+        <maven.jar.version>3.3.0</maven.jar.version>
+        <maven.surefire.version>3.1.2</maven.surefire.version>
+        <maven.resources.plugin>3.3.1</maven.resources.plugin>
+        <!-- output directory -->
+        <package.directory>${project.build.directory}/docker-resources</package.directory>
 
     </properties>
 

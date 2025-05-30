@@ -2,15 +2,14 @@ package utils;
 
 import com.aventstack.extentreports.reporter.ExtentReporter;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
-import driver.DriverProvider;
 import com.booking.page.Homepage;
+import driver.DriverProvider;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.BeforeAll;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.AfterSuite;
 
 import java.time.Duration;
 
@@ -32,6 +31,12 @@ public class TestBeforeNAfterHooks implements ApplicationConstants {
         extentReporter = new ExtentSparkReporter(reportPath);
     }
 
+    @AfterAll
+    public static void tearDownHooks() {
+
+        DriverProvider.getInstance().quitDriver();
+    }
+
     @Before
     public void testInit() {
         driver.get(homePage);
@@ -41,16 +46,8 @@ public class TestBeforeNAfterHooks implements ApplicationConstants {
     }
 
     @After
-    public void tearDown()
-    {
+    public void tearDown() {
 
-    }
-
-
-    @AfterAll
-    public static void tearDownHooks() {
-
-        DriverProvider.getInstance().quitDriver();
     }
 
 

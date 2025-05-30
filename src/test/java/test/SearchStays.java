@@ -1,14 +1,11 @@
 package test;
 
-import utils.Container;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import utils.Container;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.YearMonth;
-import java.util.Date;
 
 public class SearchStays {
 
@@ -25,8 +22,8 @@ public class SearchStays {
     }
 
     @When("user searches for {string} and {string} with {string} and {string} and Passenger details and page loads with lists of stays available")
-    public void user_searches_for_and_with_and_and_passenger_details_and_page_loads_with_lists_of_stays_available(String location, String state ,String checkinDate, String checkoutDate) throws InterruptedException {
-        container.homepage.selectSearchType("accommodations").searchDestination(location + "|"+state);
+    public void user_searches_for_and_with_and_and_passenger_details_and_page_loads_with_lists_of_stays_available(String location, String state, String checkinDate, String checkoutDate) throws InterruptedException {
+        container.homepage.selectSearchType("accommodations").searchDestination(location + "|" + state);
         String[] checkinDateArr = checkinDate.split("-");
         String[] checkoutDateArr = checkoutDate.split("-");
         System.out.println(Integer.parseInt(checkinDateArr[2]));

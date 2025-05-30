@@ -10,18 +10,17 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
 import java.time.Duration;
 import java.util.*;
 
 public abstract class TestBase {
 
-    public static WebDriver driver;
-    protected WebDriverWait wait;
     public static final String searchHotel = "Misty Meridian Serviced Apartments";
+    public static WebDriver driver;
+    protected static Optional<String> parentWindowID;
+    protected WebDriverWait wait;
     Actions action;
     Select select;
-    protected static Optional<String> parentWindowID;
     JavascriptExecutor js;
     FluentWait<WebDriver> fluentWait;
 
@@ -58,10 +57,8 @@ public abstract class TestBase {
 
 
         Iterator<String> itr = openedWindows.iterator();
-        for (String id : openedWindows)
-        {
-            if (!id.equals(parentWindowID.get()))
-            {
+        for (String id : openedWindows) {
+            if (!id.equals(parentWindowID.get())) {
                 driver.switchTo().window(id);
                 return true;
             }
@@ -70,33 +67,28 @@ public abstract class TestBase {
         return false;
     }
 
-    protected void selectByValue(int value, WebElement options)
-    {
+    protected void selectByValue(int value, WebElement options) {
         select = new Select(options);
 
         select.selectByValue(String.valueOf(value));
     }
 
-    protected void waitForPageLoad()
-    {
+    protected void waitForPageLoad() {
         js.executeScript("return document.readyState").equals("complete");
     }
 
-    protected boolean fluentWait(long waitTime, List<WebElement> ele)
-    {
-       Duration implicitWaitTimeOut = driver.manage().timeouts().getImplicitWaitTimeout();
-       driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+    protected boolean fluentWait(long waitTime, List<WebElement> ele) {
+        Duration implicitWaitTimeOut = driver.manage().timeouts().getImplicitWaitTimeout();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
         fluentWait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(waitTime)).pollingEvery(Duration.ofSeconds(1))
                 .ignoring(NoSuchElementException.class);
-        if(fluentWait.until(ExpectedConditions.visibilityOfAllElements(ele)).size()>0)
-        {
+        if (fluentWait.until(ExpectedConditions.visibilityOfAllElements(ele)).size() > 0) {
             driver.manage().timeouts().implicitlyWait(implicitWaitTimeOut);
             return true;
         }
         driver.manage().timeouts().implicitlyWait(implicitWaitTimeOut);
         return false;
     }
-
 
 
 }

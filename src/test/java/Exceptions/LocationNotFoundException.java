@@ -2,8 +2,7 @@ package Exceptions;
 
 public class LocationNotFoundException extends RuntimeException {
 
-    public LocationNotFoundException(String message)
-    {
+    public LocationNotFoundException(String message) {
         super(message);
     }
 }

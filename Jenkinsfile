@@ -1,12 +1,10 @@
 pipeline {
     agent any
 
-    environment {
+   environment {
         M2_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
-                    PATH = "${M2_HOME}/bin:$PATH"
-                     PATH = "/usr/local/bin:/opt/homebrew/bin:$PATH"
-                     DOCKER_HUB = credentials('vaithi2601')
-                }
+        PATH = "/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:${M2_HOME}/bin"
+    }
 
     stages {
 

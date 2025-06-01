@@ -1,12 +1,15 @@
 pipeline {
     agent any
-    stages {
-     environment {
-                    M2_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
+
+    environment {
+        M2_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
                     PATH = "${M2_HOME}/bin:$PATH"
                      PATH1 = "/usr/local/bin:/opt/homebrew/bin:$PATH1"
                      DOCKER_HUB = credentials('vaithi2601')
                 }
+
+    stages {
+
         stage('Build Jar') {
 
             steps {

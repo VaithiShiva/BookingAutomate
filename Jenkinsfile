@@ -24,7 +24,8 @@ pipeline {
         stage('Push Image'){
 
             steps {
-                sh 'docker login -u ${DOCKER_HUB_USR} -p ${DOCKER_HUB_PSW}'
+                //sh 'docker login -u ${DOCKER_HUB_USR} -p ${DOCKER_HUB_PSW}'
+                sh 'echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin'
                 sh "docker push vaithi2601/selenium"
             }
         }

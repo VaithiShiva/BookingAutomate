@@ -4,7 +4,7 @@ pipeline {
     environment {
         M2_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
                     PATH = "${M2_HOME}/bin:$PATH"
-                     PATH1 = "/usr/local/bin:/opt/homebrew/bin:$PATH1"
+                     PATH = "/usr/local/bin:/opt/homebrew/bin:$PATH"
                      DOCKER_HUB = credentials('vaithi2601')
                 }
 

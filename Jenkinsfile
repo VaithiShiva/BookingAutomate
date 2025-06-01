@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Build Image'){
             environment {
-             PATH="/usr/local/bin/docker:$PATH"
+                 PATH="/usr/local/bin:$PATH"
             }
             steps {
                 sh "docker build -t=vaithi2601/selenium ."

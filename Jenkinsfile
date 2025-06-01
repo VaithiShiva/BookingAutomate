@@ -32,6 +32,7 @@ pipeline {
                     sh 'echo "$DOCKER_HUB_PSW" | docker login -u "$DOCKER_HUB_USR" --password-stdin'
             sh 'docker push vaithi2601/selenium'
             }
+            }
         }
     }
     post {

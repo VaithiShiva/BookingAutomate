@@ -24,13 +24,9 @@ pipeline {
         stage('Push Image'){
 
             steps {
-                //sh 'docker login -u ${DOCKER_HUB_USR} -p ${DOCKER_HUB_PSW}'
-               // sh 'echo "$DOCKER_HUB_PSW" | docker login -u "$DOCKER_HUB_USR" --password-stdin'
-                //sh "docker push vaithi2601/selenium"
-
                 withCredentials([usernamePassword(credentialsId: 'vaithi2601', usernameVariable: 'DOCKER_HUB_USR', passwordVariable: 'DOCKER_HUB_PSW')]) {
                     sh 'echo "$DOCKER_HUB_PSW" | docker login -u "$DOCKER_HUB_USR" --password-stdin'
-            sh 'docker push vaithi2601/selenium'
+                    sh 'docker push vaithi2601/selenium'
             }
             }
         }
@@ -38,6 +34,7 @@ pipeline {
     post {
             always{
                 sh "docker logout"
+                sh "mvn test"
             }
         }
 }

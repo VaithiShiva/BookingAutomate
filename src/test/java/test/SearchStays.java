@@ -18,7 +18,6 @@ public class SearchStays {
 
     @Given("^user opens (.+) page and navigate to stays page$")
     public void user_opens_www_booking_com_page_and_navigate_to_stays_page(String url) {
-
     }
 
     @When("user searches for {string} and {string} with {string} and {string} and Passenger details and page loads with lists of stays available")

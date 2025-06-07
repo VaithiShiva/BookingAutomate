@@ -7,6 +7,7 @@ import com.booking.page.SearchResultsPage;
 import java.util.Optional;
 
 
+
 public class Container {
 
     public Homepage homepage;
@@ -14,6 +15,8 @@ public class Container {
     public SearchResultsPage searchResultsPage;
     public ReservePage reservePage;
     public Optional<String> parentWindowID;
+    public ExtentUtils extentUtils;
+    public ThreadLocalContext<ExtentUtils> extentUtilsThreadLocalContext;
 
 
 }

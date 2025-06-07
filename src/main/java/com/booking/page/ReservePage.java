@@ -1,6 +1,7 @@
 package com.booking.page;
 
 import com.booking.base.TestBase;
+import com.booking.base.TestContextBrowserPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -31,11 +32,14 @@ public class ReservePage extends TestBase {
         reserveButton.submit();
     }
 
-    public void finishBookingPage() {
-        wait.until(ExpectedConditions.visibilityOf(finishBookingPage));
-        if (finishBookingPage.getText().contains("Finish booking")) {
+    public void finishBookingPage() throws InterruptedException {
+        waitForPageLoad();
+        Thread.sleep(5000);
+            wait.until(ExpectedConditions.visibilityOf(finishBookingPage));
+        if (finishBookingPage.isDisplayed()) {
             driver.close();
-            driver.switchTo().window(parentWindowID.get());
+            System.out.println("Parent window status"+TestContextBrowserPage.getBrowser().isEmpty());
+            driver.switchTo().window(TestContextBrowserPage.getBrowser());
         }
     }
 

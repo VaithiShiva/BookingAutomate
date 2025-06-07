@@ -1,7 +1,5 @@
 package utils;
 
-import com.aventstack.extentreports.reporter.ExtentReporter;
-import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import com.booking.page.Homepage;
 import driver.DriverProvider;
 import io.cucumber.java.After;
@@ -13,32 +11,39 @@ import org.openqa.selenium.WebDriver;
 
 import java.time.Duration;
 
-public class TestBeforeNAfterHooks implements ApplicationConstants {
 
-    public static WebDriver driver;
-    public static ExtentReporter extentReporter;
-    private final Container container;
+public class TestBeforeNAfterHooks  implements ApplicationConstants  {
+
+
+    private Container container;
+    public WebDriver driver;
+
 
     public TestBeforeNAfterHooks(Container container) {
         this.container = container;
+        container.extentUtilsThreadLocalContext = new ThreadLocalContext<ExtentUtils>();
+       container.extentUtilsThreadLocalContext.setThreadSafe(new ExtentUtils(ApplicationConstants.reportPath));
     }
 
 
     @BeforeAll()
-    public static void initBeforeHooks() {
+    public static void initBeforeHooks() throws Exception {
         PropertyConfigurator.configure(".//src//test//resources//log4j.properties");
-        driver = DriverProvider.getInstance().getDriver("Chrome");
-        extentReporter = new ExtentSparkReporter(reportPath);
+
     }
 
     @AfterAll
     public static void tearDownHooks() {
-
         DriverProvider.getInstance().quitDriver();
     }
 
     @Before
-    public void testInit() {
+    public void testInit() throws Exception {
+        String valueOfBrowser = TestContextBrowser.getBrowser();
+        System.out.println(valueOfBrowser);
+        driver = DriverProvider.getInstance().getDriver(valueOfBrowser);
+        container.extentUtilsThreadLocalContext.getThreadSafe().get().createTestWithName("Booking Automation");
+        container.extentUtilsThreadLocalContext.getThreadSafe().get().successLog("Created " +valueOfBrowser+ " instance");
         driver.get(homePage);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20000));
@@ -49,6 +54,7 @@ public class TestBeforeNAfterHooks implements ApplicationConstants {
     public void tearDown() {
 
     }
+
 
 
 }

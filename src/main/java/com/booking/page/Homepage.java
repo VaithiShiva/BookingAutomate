@@ -4,8 +4,10 @@ import com.booking.base.TestBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -43,20 +45,46 @@ public class Homepage extends TestBase {
     @FindBy(xpath = "//span[@data-testid = 'date-display-field-start']")
     private WebElement dateField;
 
+    @FindBy(css = "div#close svg")
+    private WebElement closeSignInFrame;
+
+    @FindBy(xpath = "//div[@id = 'credential_picker_container']/iframe")
+    private WebElement signInPopUpFrame;
+
+
+
     public Homepage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
 
     public Homepage selectSearchType(String menu) {
+        closeSignInPopUp();
         navigationBar.findElement(By.xpath("//a[@id='" + menu + "']")).click();
         return this;
     }
 
+    public void closeSignInPopUp() {
+        if (driver instanceof FirefoxDriver) {
+           try {
+               Thread.sleep(5000);
+               driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
+               WebElement ele = wait.until(ExpectedConditions.visibilityOf(signInPopUpFrame));
+               if (ele != null) {
+                   driver.switchTo().frame(ele);
+                   closeSignInFrame.click();
+                   driver.switchTo().defaultContent();
+
+               }
+               driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+           }catch (Exception e)
+           {
+               e.printStackTrace();
+           }
+        }
+    }
 
     public String searchDestination(String location) throws InterruptedException {
-
-
         String[] locationWithState = location.split("\\|");
         waitForPageLoad();
         if (!Objects.requireNonNull(searchDestination.getDomAttribute("value")).isEmpty()) {
@@ -101,16 +129,17 @@ public class Homepage extends TestBase {
         YearMonth defaultTo = YearMonth.parse(toDateMonth.getText(), dateTimeFormatter);
         YearMonth defaultFrom = YearMonth.parse(fromDateMonth.getText(), dateTimeFormatter);
 
-        System.out.println(defaultFrom.getYear());
-        System.out.println(from.getYear());
+        System.out.println(defaultFrom.getMonth());
+        System.out.println(defaultTo.getMonth());
         if (defaultFrom.getYear() == from.getYear()) {
             if (from.isAfter(LocalDate.now()) && to.isAfter(from)) {
-                String startMonth = (defaultFrom.getMonth().name().substring(0, 1).toUpperCase()) + defaultFrom.getMonth().name().substring(1).toLowerCase();
-                String toMonth = (defaultTo.getMonth().name().substring(0, 1).toUpperCase()) + defaultTo.getMonth().name().substring(1).toLowerCase();
+                String startMonth = (from.getMonth().name().substring(0, 1).toUpperCase()) + from.getMonth().name().substring(1).toLowerCase();
+                String toMonth = (to.getMonth().name().substring(0, 1).toUpperCase()) + to.getMonth().name().substring(1).toLowerCase();
                 System.out.println(startMonth);
                 System.out.println(toMonth);
                 WebElement startDate = driver.findElement(By.xpath("//*[@id='calendar-searchboxdatepicker']//h3[contains(text(),'" + startMonth + "')]//following-sibling::table//child::span[text() = '" + from.getDayOfMonth() + "']/.."));
                 startDate.click();
+                System.out.println("//*[@id='calendar-searchboxdatepicker']//h3[contains(text(),'" + toMonth + "')]//following-sibling::table//child::span[text() = '" + to.getDayOfMonth() + "']/..");
                 WebElement endDate = driver.findElement(By.xpath("//*[@id='calendar-searchboxdatepicker']//h3[contains(text(),'" + toMonth + "')]//following-sibling::table//child::span[text() = '" + to.getDayOfMonth() + "']/.."));
                 endDate.click();
             }

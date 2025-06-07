@@ -10,9 +10,9 @@ Feature: SearchBusByLocationWithData
 
 
     Examples:
-      | destination | destinationState | checkindate | checkoutdate | HotelName                            | ApartmentType           | ApartmentNumber |
-      | Bangalore   | Karnataka        | 31-May-2025 | 4-June-2025  | Misty Meridian Serviced Apartments   | Three-Bedroom Apartment | 1               |
-      | Chennai     | Tamil Nadu       | 2-June-2025 | 5-June-2025  | ibis Chennai Sipcot - An Accor Brand | Standard Room Twin Bed  | 2               |
+      | destination | destinationState | checkindate | checkoutdate | HotelName                          | ApartmentType           | ApartmentNumber |
+      | Bangalore   | Karnataka        | 9-June-2025 | 14-June-2025  | Misty Meridian Serviced Apartments | Three-Bedroom Apartment | 1               |
+      | Chennai     | Tamil Nadu       | 7-July-2025 | 10-July-2025 | The Raintree, St. Mary’s Road      | Deluxe Room             | 2               |
 
 
 

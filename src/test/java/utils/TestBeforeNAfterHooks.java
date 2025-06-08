@@ -47,7 +47,7 @@ public class TestBeforeNAfterHooks  implements ApplicationConstants  {
         driver.get(homePage);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20000));
-        container.homepage = new Homepage(driver);
+        container.homepage = new Homepage(driver,valueOfBrowser);
     }
 
     @After

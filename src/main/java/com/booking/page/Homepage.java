@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -52,29 +53,32 @@ public class Homepage extends TestBase {
     private WebElement signInPopUpFrame;
 
 
+    private String browserName;
 
-    public Homepage(WebDriver driver) {
+
+
+    public Homepage(WebDriver driver, String browser) {
         super(driver);
+        this.browserName = browser;
         PageFactory.initElements(driver, this);
     }
 
     public Homepage selectSearchType(String menu) {
+
         closeSignInPopUp();
         navigationBar.findElement(By.xpath("//a[@id='" + menu + "']")).click();
         return this;
     }
 
     public void closeSignInPopUp() {
-        if (driver instanceof FirefoxDriver) {
+        if (browserName.equals("firefox")) {
            try {
-               Thread.sleep(5000);
                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
                WebElement ele = wait.until(ExpectedConditions.visibilityOf(signInPopUpFrame));
                if (ele != null) {
                    driver.switchTo().frame(ele);
                    closeSignInFrame.click();
                    driver.switchTo().defaultContent();
-
                }
                driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
            }catch (Exception e)

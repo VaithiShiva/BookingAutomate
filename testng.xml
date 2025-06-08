@@ -19,5 +19,5 @@
             <class name="utils.TestBeforeNAfterHooks"/>
             <class name="runner.InitRunner"/>
         </classes>
-    </test> 
+    </test>
 </suite> <!-- Suite -->

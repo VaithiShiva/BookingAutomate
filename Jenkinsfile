@@ -27,14 +27,22 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'vaithi2601', usernameVariable: 'DOCKER_HUB_USR', passwordVariable: 'DOCKER_HUB_PSW')]) {
                     sh 'echo "$DOCKER_HUB_PSW" | docker login -u "$DOCKER_HUB_USR" --password-stdin'
                     sh 'docker push vaithi2601/selenium'
+                    sh "docker logout"
             }
             }
         }
-    }
+        stage('Compose UP and Run'){
+
+            steps {
+                sh "docker compose up"
+                sh "mvn test"
+            }
+            }
+        }
+
     post {
             always{
-                sh "docker logout"
-                sh "mvn test"
+                sh "docker compose down"
             }
         }
 }

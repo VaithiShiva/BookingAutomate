@@ -9,7 +9,7 @@ import org.testng.annotations.Parameters;
 import utils.TestContextBrowser;
 
 
-@CucumberOptions(features = "src/test/java/features",
+@CucumberOptions(features = "classpath:features",
         glue = {"utils", "test"}, monochrome = true, dryRun = false
 )
 public class InitRunner extends AbstractTestNGCucumberTests {

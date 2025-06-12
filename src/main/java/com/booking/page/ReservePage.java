@@ -2,6 +2,8 @@ package com.booking.page;
 
 import com.booking.base.TestBase;
 import com.booking.base.TestContextBrowserPage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,6 +12,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class ReservePage extends TestBase {
+
+    private  final Logger log = LogManager.getLogger(this.getClass());
 
     @FindBy(css = "tr.hprt-table-header")
     private WebElement reserveTable;
@@ -30,6 +34,7 @@ public class ReservePage extends TestBase {
         selectByValue(num, selectAnApartmentDropDown);
         WebElement reserveButton = driver.findElement(By.cssSelector("div[data-testid = reservation-summary] button span:nth-child(2)"));
         reserveButton.submit();
+        log.info("Selected number of appartment and submitted");
     }
 
     public void finishBookingPage() throws InterruptedException {
@@ -37,9 +42,10 @@ public class ReservePage extends TestBase {
         Thread.sleep(5000);
             wait.until(ExpectedConditions.visibilityOf(finishBookingPage));
         if (finishBookingPage.isDisplayed()) {
+            log.info("Landed on Finish Booking Page");
             driver.close();
-            System.out.println("Parent window status"+TestContextBrowserPage.getBrowser().isEmpty());
             driver.switchTo().window(TestContextBrowserPage.getBrowser());
+            log.info("Closed Window and navigated to parent window");
         }
     }
 

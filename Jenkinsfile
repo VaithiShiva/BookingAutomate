@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    parameters {
+        choice choices: ['testng.xml', 'testngdocker.xml'], description: 'Select Suite File', name: 'Suite_XML'
+}
+
+
    environment {
         M2_HOME = '/opt/homebrew/Cellar/maven/3.9.9/libexec'
         PATH = "/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:${M2_HOME}/bin"

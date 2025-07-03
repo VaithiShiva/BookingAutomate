@@ -15,38 +15,24 @@ services:
     chrome:
         image: selenium/node-chrome:latest
         platform: linux/amd64  # Fix for Apple Silicon
-        container_name: selenium-chrome
         shm_size: '2g'
+        deploy:
+            replicas: 0
         depends_on:
             - hub
-        environment:
-            - SE_EVENT_BUS_HOST=hub
-            - SE_EVENT_BUS_PUBLISH_PORT=4442
-            - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-            - SE_VNC_NO_PASSWORD=1
-            - NODE_MAX_INSTANCES=4
-            - NODE_MAX_SESSION=4
+        env_file: .env
         networks:
             - selenium-grid
 
     firefox:
         image: selenium/node-firefox:latest
         platform: linux/amd64  # Fix for Apple Silicon
-        container_name: selenium-firefox
-        shm_size: '4g'
+        shm_size: '2g'
+        deploy:
+            replicas: 0
         depends_on:
             - hub
-        environment:
-            - SE_EVENT_BUS_HOST=hub
-            - SE_EVENT_BUS_PUBLISH_PORT=4442
-            - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
-            - SE_VNC_NO_PASSWORD=1
-            - NODE_MAX_INSTANCES=2  # Reduced for stability
-            - NODE_MAX_SESSION=2    # Reduced for stability
-            - SE_START_XVFB=true    # Enable virtual display
-            - SE_OPTS=--log-level INFO
-            - JAVA_OPTS=-Dwebdriver.firefox.logfile=/tmp/firefox.log
-            - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+        env_file: .env
         security_opt:
             - seccomp:unconfined  # Helps with Firefox sandboxing issues
         networks:

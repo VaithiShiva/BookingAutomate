@@ -36,10 +36,18 @@ pipeline {
             }
             }
         }
+        stage('Start Docker Grid') {
+            steps {
+                sh '''
+                    docker compose down --remove-orphans
+                    docker rm -f selenium-hub || true
+                '''
+            }
+        }
         stage('Compose UP and Run'){
 
             steps {
-                sh "docker compose up"
+                sh "docker compose up -d --force-recreate"
                 sh "mvn test"
             }
             }

@@ -12,12 +12,12 @@
             <class name="runner.InitRunner"/>
         </classes>
     </test>
-<!-- <test  preserve-order="true" name="ChromeTest">
+ <test  preserve-order="true" name="ChromeTest">
         <parameter name="browser" value="chrome"/>
         <parameter name="reportPath" value=".//src//test//resources//"/>
         <classes>
             <class name="utils.TestBeforeNAfterHooks"/>
             <class name="runner.InitRunner"/>
         </classes>
-    </test> -->
+    </test>
 </suite> <!-- Suite -->

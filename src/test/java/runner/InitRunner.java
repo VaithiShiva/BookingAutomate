@@ -10,7 +10,7 @@ import utils.TestContextBrowser;
 
 
 @CucumberOptions(features = "classpath:features",
-        glue = {"utils", "test"}, monochrome = true, dryRun = false
+        glue = {"utils", "test"}, monochrome = true, dryRun = true
 )
 public class InitRunner extends AbstractTestNGCucumberTests {
 

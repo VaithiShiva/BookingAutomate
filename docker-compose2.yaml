@@ -1,9 +1,11 @@
 services:
     hub:
         image: selenium/hub:latest
-        platform: linux/amd64  # Fix for Apple Silicon
+        platform: linux/arm64  # Fix for Apple Silicon
         container_name: selenium-hub
         ports:
+            - "4442:4442"
+            - "4443:4443"
             - "4444:4444"
         environment:
             - GRID_MAX_SESSION=16
@@ -13,26 +15,32 @@ services:
             - selenium-grid
 
     chrome:
-        image: selenium/node-chrome:latest
-        platform: linux/amd64  # Fix for Apple Silicon
-        shm_size: '2g'
+        image: selenium/node-chromium:latest
+        platform: linux/arm64  # Fix for Apple Silicon
+        shm_size: '1g'
+        environment:
+            - SE_EVENT_BUS_HOST=selenium-hub
+            - SE_EVENT_BUS_PUBLISH_PORT=4442
+            - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
         deploy:
             replicas: 1
         depends_on:
             - hub
-        env_file: .env
         networks:
             - selenium-grid
 
     firefox:
         image: selenium/node-firefox:latest
-        platform: linux/amd64  # Fix for Apple Silicon
-        shm_size: '2g'
+        platform: linux/arm64  # Fix for Apple Silicon
+        shm_size: '1g'
+        environment:
+            - SE_EVENT_BUS_HOST=selenium-hub
+            - SE_EVENT_BUS_PUBLISH_PORT=4442
+            - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
         deploy:
             replicas: 1
         depends_on:
             - hub
-        env_file: .env
         security_opt:
             - seccomp:unconfined  # Helps with Firefox sandboxing issues
         networks:

@@ -1,0 +1,16 @@
+version: "3"
+services:
+  booking:
+     image: vaithi2601/selenium
+     environment:
+         - HUB_HOST=hub
+         - THREAD_COUNT=3
+         - TEST_SUITE=${testng}
+     volumes:
+       - ${PWD}/output/feature:/home/selenium-docker/target/docker-resource/features/
+     networks:
+       - selenium-grid
+
+networks:
+    selenium-grid:
+      driver: bridge

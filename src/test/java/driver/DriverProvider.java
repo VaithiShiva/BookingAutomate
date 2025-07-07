@@ -43,7 +43,7 @@ public class DriverProvider {
 
     public WebDriver setDriver(String browserName, Boolean flag) throws Exception{
 
-        URI url = new URI("http://localhost:4444/wd/hub");
+        URI url = new URI("http://192.168.1.21:4444/wd/hub");
         switch (browserName) {
             case "chrome":{
             ChromeOptions options = new ChromeOptions();

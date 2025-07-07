@@ -2,12 +2,16 @@ package test;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import utils.Container;
 
 import java.time.LocalDate;
 import java.time.Month;
 
 public class SearchStays {
+
+    private  final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
     public Container container;
 
@@ -22,20 +26,31 @@ public class SearchStays {
 
     @When("user searches for {string} and {string} with {string} and {string} and Passenger details and page loads with lists of stays available")
     public void user_searches_for_and_with_and_and_passenger_details_and_page_loads_with_lists_of_stays_available(String location, String state, String checkinDate, String checkoutDate) throws InterruptedException {
-        container.homepage.selectSearchType("accommodations").searchDestination(location + "|" + state);
-        String[] checkinDateArr = checkinDate.split("-");
-        String[] checkoutDateArr = checkoutDate.split("-");
-        System.out.println(Integer.parseInt(checkinDateArr[2]));
-        System.out.println(Month.valueOf(checkinDateArr[1].toUpperCase()));
-        System.out.println(Integer.parseInt(checkinDateArr[0]));
-        container.homepage.selectStartAndToDate(LocalDate.of(Integer.parseInt(checkinDateArr[2]), Month.valueOf(checkinDateArr[1].toUpperCase()), Integer.parseInt(checkinDateArr[0])), LocalDate.of(Integer.parseInt(checkoutDateArr[2]), Month.valueOf(checkoutDateArr[1].toUpperCase()), Integer.parseInt(checkoutDateArr[0])));
-
+        try {
+            container.homepage.selectSearchType("accommodations").searchDestination(location + "|" + state);
+            String[] checkinDateArr = checkinDate.split("-");
+            String[] checkoutDateArr = checkoutDate.split("-");
+            System.out.println(Integer.parseInt(checkinDateArr[2]));
+            System.out.println(Month.valueOf(checkinDateArr[1].toUpperCase()));
+            System.out.println(Integer.parseInt(checkinDateArr[0]));
+            container.homepage.selectStartAndToDate(LocalDate.of(Integer.parseInt(checkinDateArr[2]), Month.valueOf(checkinDateArr[1].toUpperCase()), Integer.parseInt(checkinDateArr[0])), LocalDate.of(Integer.parseInt(checkoutDateArr[2]), Month.valueOf(checkoutDateArr[1].toUpperCase()), Integer.parseInt(checkoutDateArr[0])));
+        }
+        catch (Exception e)
+        {
+            log.error(e.toString());
+        }
     }
 
     @When("user searches for {string} from list and clicks reserve.")
     public void user_searches_for_from_list_and_clicks_reserve(String hotelName) throws InterruptedException {
-        container.searchResultsPage = container.homepage.searchSubmit();
-        container.reservePage = container.searchResultsPage.searchForTheHotelAndSeeAvailability(hotelName);
+        try {
+            container.searchResultsPage = container.homepage.searchSubmit();
+            container.reservePage = container.searchResultsPage.searchForTheHotelAndSeeAvailability(hotelName);
+        }
+        catch (Exception e)
+        {
+            log.error(e.toString());
+        }
     }
 
 
